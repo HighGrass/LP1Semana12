@@ -4,11 +4,12 @@ namespace Palindrome
 {
     class Program
     {
-        static bool isPalindrome(string str, out bool result)
+        static bool isPalindrome(string str)
         {
-            result = false;
 
-            if (str.Length < 2) return result = false;
+            if (str == null) throw new ArgumentNullException(nameof(str), "String não pode ser nula.");
+
+            if (str.Length < 2) return false;
 
             string half1 = "";
             string half2 = "";
@@ -36,21 +37,25 @@ namespace Palindrome
                 }
             }
 
-            if (half1.ToLower() == half2.ToLower()) return result = true;
-            else return result = false;
+            if (half1.ToLower() == half2.ToLower()) return true;
+            else return false;
         }
         static void Main(string[] args)
         {
-            string str = "Ana";
-            string text = "";
+            foreach (string arg in args)
+            {
+                bool result = false;
+                try
+                {
+                    result = isPalindrome(arg);
+                }
+                catch (ArgumentNullException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
 
-            bool result = false;
-            isPalindrome(str, out result);
-
-            if (!result) text = "not a ";
-
-            Console.WriteLine(str + " is " + text + "Palindrome!");
-
+                Console.WriteLine(arg + "->" + result);
+            }
         }
     }
 }
